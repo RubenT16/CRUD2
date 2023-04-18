@@ -96,6 +96,23 @@ class User {
         $user = new User($this->pdo, $user_data['id']);
         return $user;
     }
+
+    public function getAllUsers() {
+        $stmt = $this->pdo->query("SELECT * FROM users");
+        $users = [];
+        while ($user_data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+          $user = new User($this->pdo);
+          $user->id = $user_data['id'];
+          $user->first_name = $user_data['first_name'];
+          $user->last_name = $user_data['last_name'];
+          $user->email = $user_data['email'];
+          $user->is_admin = $user_data['is_admin'];
+          $user->password = $user_data['password'];
+          $users[] = $user;
+        }
+        return $users;
+      }
+      
     
 }
 
